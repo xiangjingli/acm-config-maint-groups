@@ -7,6 +7,4 @@ metadata:
   namespace: acm-config-maint-groups-channel
 spec:
   type: Git
-  pathname: 'https://github.com/senthilredhat/acm-config-maint-groups.git'
-  secretRef:
-    name: acm-config-maint-groups-secret
+  pathname: 'https://github.com/xiangjingli/acm-config-maint-groups.git'
