@@ -1,0 +1,83 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base/common
+- ../../base/gitTag
+- placementRule.yaml
+- namespace.yaml
+
+
+labels:
+  - pairs:
+      app: sub-of-sub
+
+namespace: sub-of-sub
+
+configMapGenerator:
+  - name: sub-of-sub
+    literals:
+      - application_name=sub-of-sub
+      - git-path=app-of-app
+      - placement_reference=sub-of-sub
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+replacements:
+- source:
+    kind: ConfigMap
+    name: sub-of-sub
+    fieldPath: data.application_name
+  targets:
+  - select:
+      kind: Subscription
+    fieldPaths:
+      - metadata.name
+      - metadata.labels.app
+  - select:
+      kind: Application
+    fieldPaths:
+      - metadata.name
+      - metadata.labels.app
+  - select:
+      kind: Application
+    fieldPaths:
+      - spec.selector.matchExpressions.0.values.0         
+  - select:
+      kind: PlacementRule
+    fieldPaths:
+      - metadata.name
+  - select:
+      kind: Namespace
+    fieldPaths:
+      - metadata.name         
+- source:
+    kind: ConfigMap
+    name: sub-of-sub
+    fieldPath: data.git-path
+  targets:
+  - select:
+      kind: Subscription
+    fieldPaths:
+      - metadata.annotations.[apps.open-cluster-management.io/git-path]   
+- source:
+    kind: ConfigMap
+    name: git-config-map
+    fieldPath: data.git_branch
+  targets:
+  - select:
+      kind: Subscription
+    fieldPaths:
+      - metadata.annotations.[apps.open-cluster-management.io/git-branch]
+    options:
+      create: true      
+- source:
+    kind: ConfigMap
+    name: sub-of-sub    
+    fieldPath: data.placement_reference
+  targets:
+  - select:
+      kind: Subscription
+    fieldPaths:
+      - spec.placement.placementRef.name

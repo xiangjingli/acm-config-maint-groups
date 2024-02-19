@@ -1,0 +1,19 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-policy-limitclusteradmin
+  namespace: policies
+spec:
+  clusterConditions:
+    - status: 'True'
+      type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - key: env
+        operator: In
+        values:
+          - dev
+      - key: fault-domain
+        operator: In
+        values:
+          - primary

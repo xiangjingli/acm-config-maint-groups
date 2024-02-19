@@ -1,0 +1,8 @@
+kind: Kustomization
+
+resources:
+- policy.yaml
+- placement.yaml
+- placementBinding.yaml
+
+namespace: policies
