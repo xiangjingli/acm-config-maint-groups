@@ -1,0 +1,10 @@
+kind: Kustomization
+
+
+bases:
+  - ../../../../components/hello-world
+
+resources:
+- route.yaml
+
+namePrefix: dev-

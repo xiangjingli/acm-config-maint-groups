@@ -1,0 +1,12 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  annotations:
+    apps.open-cluster-management.io/reconcile-rate: medium
+  name: acm-config-maint-groups-channel
+  namespace: acm-config-maint-groups-channel
+spec:
+  type: Git
+  pathname: 'https://github.com/senthilredhat/acm-config-maint-groups.git'
+  secretRef:
+    name: acm-config-maint-groups-secret

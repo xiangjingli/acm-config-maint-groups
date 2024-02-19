@@ -1,0 +1,8 @@
+kind: Kustomization
+
+resources:
+- ../../base/mysql
+- subscription.yaml
+
+commonLabels:
+  app: mysql

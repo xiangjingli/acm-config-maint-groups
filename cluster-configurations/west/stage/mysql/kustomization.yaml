@@ -1,0 +1,12 @@
+kind: Kustomization
+
+components:
+  - ../common
+
+bases:
+  - ../../../../components/mysql
+  
+resources:
+- dbclaim-pvc.yaml
+- route-mng.yaml
+namePrefix: stage-
